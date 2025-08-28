@@ -19,6 +19,20 @@ def menu():
         return 3
     #My style of coding is to always return inputs to main function and have that act as an intermediary between functions
 
+'''Sets up and monitors a player vs player game'''
+def player_vs_player():
+    game_board = board()
+     
+    #collects player names
+    x_name = input("Player X, enter your name: ")
+    o_name = input("Player O, enter your name: ")
+
+    #While loop to keep the game running until a player wins or the game is a draw
+    while True:
+        game_board.print_board(game_board.slots)
+        
+
+    
 '''Board class to both display board and keep track of game state'''
 class board():
     def __init__(self):
@@ -70,7 +84,7 @@ class board():
             return False  
         return True
         
-    
+    '''checks if there is a winner after every turn'''
     def check_winner(self, slots):
         #Checks all possible winning combinations
         if slots[0] == slots[1] == slots[2]:
@@ -91,6 +105,19 @@ class board():
             return True
         else:
             return None
+    
+    '''checks if the game is a draw after every turn'''
+    def check_draw(self, slots):
+        
+        #Increments a counter for every filled slot. If counter reaches 9, all slots are filled and game is a draw
+        count = 0
+        for slot in slots:
+            if slot == 'X' or slot == 'O':
+                count += 1
+        if count == 9:
+            return True
+        else:
+            return False
     
 
 #Everything below here is just for testing purposes, will be removed in final version
