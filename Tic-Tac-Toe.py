@@ -8,7 +8,6 @@ def file_check():
         None
     else:
         f = open("scores.txt", "w")
-        f.write("")
         f.close()
 
 '''Displays the main menu for the player to pick a game mode of view scores'''
@@ -92,14 +91,18 @@ def player_vs_computer():
 '''Views the scores of players from previous games'''
 def view_scores():
     f = open("scores.txt", "r")
-    scores = f.read()
-    if scores == (""):
-        print("No scores Yet")
+    score_check = f.readlines()
+    f.close()
+    
+    if len(score_check) == 0:   # check if file is empty
+        print("No scores yet")
     else:
-        ()
+        for line in score_check:
+            print(line.strip())
     
 def add_score(winner, loser):
     f = open("scores.txt", "a")
+    
 
 '''Board class to both display board and keep track of game state'''
 class board():
