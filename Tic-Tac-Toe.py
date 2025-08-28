@@ -2,6 +2,8 @@ import check_input
 import random
 import os
 
+
+#-------------------------------------Functions-----------------------------------#
 '''Checks if the scores file exists, if not creates one'''
 def file_check():
     if os.path.exists("scores.txt"):
@@ -88,8 +90,63 @@ def player_vs_player():
             print("The game is a draw!")
             return None
     
+'''Allows the player to play against an AI oppenent '''
 def player_vs_computer():
-    ()
+    game_board = board()
+    
+    #Collects player name 
+    x_name = input("Player X, enter your name: ")
+    o_name = ("Computer")
+
+    while True:   
+        #Start of Player X's turn
+        game_board.print_board(game_board.slots)
+        print(f"{x_name}'s turn")
+            
+        #Keeps asking for input until a valid slot is chosen
+        valid = False
+        while valid == False:
+            x_input = check_input.get_int_range("Enter a slot number (1-9): ", 1, 9)
+            valid = game_board.update_board(game_board.slots, x_input, 'X')
+        
+        #Checks if X wins the game. Returns the winner's name if so
+        winner = game_board.check_winner(game_board.slots)
+        if winner == True:
+            game_board.print_board(game_board.slots)
+            print(f"{x_name} wins!")
+            return(x_name, o_name)
+            
+        #Checks if the game is a draw. Ends the game if so
+        draw = game_board.check_draw(game_board.slots)
+        if draw == True:
+            game_board.print_board(game_board.slots)
+            print("The game is a draw!")
+            return None
+        
+        #-----------------------------------------------------------
+
+        #Computers turn
+        valid = False
+        while valid == False:
+            o_input = random.randint(1,9)
+            valid = game_board.update_board(game_board.slots, o_input, 'O')
+        
+        #Checks if O wins the game. Returns the winner's name if so
+            winner = game_board.check_winner(game_board.slots)
+            if winner == True:
+                game_board.print_board(game_board.slots)
+                print(f"{o_name} wins!")
+                return(o_name, x_name)
+            
+            #Checks if the game is a draw. Ends the game if so
+            draw = game_board.check_draw(game_board.slots)
+            if draw == True:
+                game_board.print_board(game_board.slots)
+                print("The game is a draw!")
+                return None
+    
+
+
     
 
 
@@ -155,27 +212,9 @@ def add_score(winner, loser):
         f = open("scores.txt", "w")
         f.writelines(existing_score_check)
         f.close()
-        
-        
-
-            
 
 
-        
-
-       
-
-
-       
-
-
-        
-
-
-
-
-
-
+#----------------------------------------------------Classes-------------------------------------------------------#
 '''Board class to both display board and keep track of game state'''
 class board():
     def __init__(self):
@@ -261,8 +300,9 @@ class board():
             return True
         else:
             return False
-    
-'''Main function to run the program'''
+
+
+#--------------------Main-------------------#
 def main():
     file_check()
     
@@ -284,14 +324,14 @@ def main():
 
         
         elif menu_choice == 2:
-            ()
+            game_result = player_vs_computer()
+            
+            #Means game wasn't a draw
+            if game_result != None:
+                winner, loser = game_result
+                add_score(winner, loser)
         
         
         elif menu_choice == 3:
             view_scores()
-        
-
-
-            
-
 main()
