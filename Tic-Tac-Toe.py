@@ -1,7 +1,15 @@
 import check_input
 import random
-import sys
 import os
+
+'''Checks if the scores file exists, if not creates one'''
+def file_check():
+    if os.path.exists("scores.txt"):
+        None
+    else:
+        f = open("scores.txt", "w")
+        f.write("")
+        f.close()
 
 '''Displays the main menu for the player to pick a game mode of view scores'''
 def menu():
@@ -77,16 +85,21 @@ def player_vs_player():
             print("The game is a draw!")
             return None
 
+def player_vs_computer():
+    ()
+
 
 '''Views the scores of players from previous games'''
 def view_scores():
-    if os.path.exists("scores.txt"):
-        ()
+    f = open("scores.txt", "r")
+    scores = f.read()
+    if scores == (""):
+        print("No scores Yet")
     else:
-        print("No scores available")
-        return
+        ()
     
-    
+def add_score(winner, loser):
+    f = open("scores.txt", "a")
 
 '''Board class to both display board and keep track of game state'''
 class board():
@@ -176,6 +189,8 @@ class board():
     
 '''Main function to run the program'''
 def main():
+    file_check()
+    
     print("TIC-TAC-TOE")
     #Keeps the program in a loop to allowed multiple games until user exits
     while True:
