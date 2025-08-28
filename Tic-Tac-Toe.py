@@ -24,19 +24,30 @@ def menu():
 def main():
     menu()
     
-
-
+'''Board class to both display board and keep track of game state'''
+class board():
+    def __init__(self):
+        self.slot_1 = '1'
+        self.slot_2 = '2'
+        self.slot_3 = '3'
+        self.slot_4 = '4'
+        self.slot_5 = '5'
+        self.slot_6 = '6'
+        self.slot_7 = '7'
+        self.slot_8 = '8'
+        self.slot_9 = '9'
+        self.slots = [self.slot_1, self.slot_2, self.slot_3, self.slot_4, self.slot_5, self.slot_6, self.slot_7, self.slot_8, self.slot_9]
     
-'''Prints a board with slots to be filled up by user or computer inputs'''
-def print_board(slots):
-    print("\n")
-    print(" " + slots[0] + " | " + slots[1] + " | " + slots[2] + " ")
-    print("---+---+---")
-    print(" " + slots[3] + " | " + slots[4] + " | " + slots[5] + " ")
-    print("---+---+---")
-    print(" " + slots[6] + " | " + slots[7] + " | " + slots[8] + " ")
-    print("\n")    
+    '''Prints a board with slots to be filled up by user or computer inputs'''
+    def print_board(self, slots):
+        print("\n")
+        print(" " + slots[0] + " | " + slots[1] + " | " + slots[2] + " ")
+        print("---+---+---")
+        print(" " + slots[3] + " | " + slots[4] + " | " + slots[5] + " ")
+        print("---+---+---")
+        print(" " + slots[6] + " | " + slots[7] + " | " + slots[8] + " ")
+        print("\n")    
 
-print_board([])
+game_board = board()
+game_board.print_board(game_board.slots)
 
-]
