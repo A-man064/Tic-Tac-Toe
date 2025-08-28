@@ -51,12 +51,14 @@ def player_vs_player():
         #Checks if X wins the game. Returns the winner's name if so
         winner = game_board.check_winner(game_board.slots)
         if winner == True:
+            game_board.print_board(game_board.slots)
             print(f"{x_name} wins!")
             return(x_name, o_name)
         
         #Checks if the game is a draw. Ends the game if so
         draw = game_board.check_draw(game_board.slots)
         if draw == True:
+            game_board.print_board(game_board.slots)
             print("The game is a draw!")
             return None
         
@@ -75,17 +77,20 @@ def player_vs_player():
         #Checks if O wins the game. Returns the winner's name if so
         winner = game_board.check_winner(game_board.slots)
         if winner == True:
+            game_board.print_board(game_board.slots)
             print(f"{o_name} wins!")
             return(o_name, x_name)
         
         #Checks if the game is a draw. Ends the game if so
         draw = game_board.check_draw(game_board.slots)
         if draw == True:
+            game_board.print_board(game_board.slots)
             print("The game is a draw!")
             return None
-
+    
 def player_vs_computer():
     ()
+    
 
 
 '''Views the scores of players from previous games'''
@@ -100,9 +105,76 @@ def view_scores():
         for line in score_check:
             print(line.strip())
     
+'''Complex function that will update scores as well as add new players and new scores'''
 def add_score(winner, loser):
-    f = open("scores.txt", "a")
     
+    #resets score_line variable upon each function call
+    score_line = None
+    
+    #Checks to see if a score for these two players already exists
+    f = open("scores.txt", "r")
+    existing_score_check = f.readlines()
+    f.close()
+    
+    
+    #Finds the score line if it exists
+    for line in existing_score_check:
+        if winner in line and loser in line:
+            score_line = line.strip()
+            
+    #if a score line does not exist, create one
+    if score_line == None:
+        f = open("scores.txt", "a")
+        f.write(f"{winner}: 1, {loser}: 0\n")
+        f.close()
+    else:
+        #Splits the score up to edit
+        parts = score_line.split(", ")
+        w_name, w_score = parts[0].split(": ")
+        l_name, l_score = parts[1].split(": ")
+
+        #Sets the score numbers up into integers for splitting 
+        w_score = int(w_score)
+        l_score = int(l_score)
+
+        #Updates this part of the score
+        if w_name == winner:
+            w_score += 1
+        else:
+            l_score += 1
+        
+        #Rebuilds the line with new data
+        updated_line = (f"{w_name}: {w_score}, {l_name}: {l_score}\n")
+
+        #Replaces old line with the new line (using index)
+        for i in range(len(existing_score_check)):
+            if winner in existing_score_check[i] and loser in existing_score_check[i]:
+                existing_score_check[i] = updated_line
+
+        #Write the updated list back to file
+        f = open("scores.txt", "w")
+        f.writelines(existing_score_check)
+        f.close()
+        
+        
+
+            
+
+
+        
+
+       
+
+
+       
+
+
+        
+
+
+
+
+
 
 '''Board class to both display board and keep track of game state'''
 class board():
@@ -204,8 +276,12 @@ def main():
         #Player vs Player
         if menu_choice == 1:
             game_result = player_vs_player()
+            
+            #Means game wasn't a draw
             if game_result != None:
-                winner, Loser = game_result
+                winner, loser = game_result
+                add_score(winner, loser)
+
         
         elif menu_choice == 2:
             ()
