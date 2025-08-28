@@ -72,16 +72,39 @@ class board():
             slots[8] = symbol
         else:
             print("Error: Slot already taken")
-            return False
+            return False  
         return True
+        
+    
+    def check_winner(self, slots):
+        #Checks all possible winning combinations
+        if slots[0] == slots[1] == slots[2]:
+            return True
+        elif slots[3] == slots[4] == slots[5]:
+            return True
+        elif slots[6] == slots[7] == slots[8]:
+            return True
+        elif slots[0] == slots[3] == slots[6]:
+            return True
+        elif slots[1] == slots[4] == slots[7]:
+            return True
+        elif slots[2] == slots[5] == slots[8]:
+            return True
+        elif slots[0] == slots[4] == slots[8]:
+            return True
+        elif slots[2] == slots[4] == slots[6]:
+            return True
+        else:
+            return None
     
 
 #Everything below here is just for testing purposes, will be removed in final version
 
 game_board = board()
 game_board.print_board(game_board.slots)
-
-for i in range(2):    
+  
+win = None
+while win == None:
     while True:
         user_input = check_input.get_int_range("Select a slot (1-9): ", 1, 9)
         valid_update = game_board.update_board(game_board.slots, user_input, 'X')
@@ -89,6 +112,9 @@ for i in range(2):
             break
         else:
             continue
+    
 
     game_board.print_board(game_board.slots)
+    win = game_board.check_winner(game_board.slots)
+print("Works")
 
