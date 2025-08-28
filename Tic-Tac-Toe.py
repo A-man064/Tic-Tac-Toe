@@ -19,10 +19,64 @@ def menu():
         return 3
     #My style of coding is to always return inputs to main function and have that act as an intermediary between functions
 
+'''Sets up and monitors a player vs player game'''
+def player_vs_player():
+    game_board = board()
+     
+    #collects player names
+    x_name = input("Player X, enter your name: ")
+    o_name = input("Player O, enter your name: ")
+
+    #While loop to keep the game running until a player wins or the game is a draw
+    while True:
+        
+        #Start of Player X's turn
+        game_board.print_board(game_board.slots)
+        print(f"{x_name}'s turn")
+        
+        #Keeps asking for input until a valid slot is chosen
+        valid = False
+        while valid == False:
+            x_input = check_input.get_int_range("Enter a slot number (1-9): ", 1, 9)
+            valid = game_board.update_board(game_board.slots, x_input, 'X')
+    
+        #Checks if X wins the game. Returns the winner's name if so
+        winner = game_board.check_winner(game_board.slots)
+        if winner == True:
+            print(f"{x_name} wins!")
+            return(x_name)
+        
+        #Checks if the game is a draw. Ends the game if so
+        draw = game_board.check_draw(game_board.slots)
+        if draw == True:
+            print("The game is a draw!")
+            return None
+        
+        #----------------------------------------------------------------------------
+        
+        #Start of Player O's turn
+        game_board.print_board(game_board.slots)
+        print(f"{o_name}'s turn")
+
+        #Keeps asking for input until a valid slot is chosen
+        valid = False
+        while valid == False:
+            o_input = check_input.get_int_range("Enter a slot number (1-9): ", 1, 9)
+            valid = game_board.update_board(game_board.slots, o_input, 'O')
+
+        #Checks if O wins the game. Returns the winner's name if so
+        winner = game_board.check_winner(game_board.slots)
+        if winner == True:
+            print(f"{o_name} wins!")
+            return(o_name)
+        
+        #Checks if the game is a draw. Ends the game if so
+        draw = game_board.check_draw(game_board.slots)
+        if draw == True:
+            print("The game is a draw!")
+            return None
 
 
-def main():
-    menu()
     
 '''Board class to both display board and keep track of game state'''
 class board():
@@ -75,7 +129,7 @@ class board():
             return False  
         return True
         
-    
+    '''checks if there is a winner after every turn'''
     def check_winner(self, slots):
         #Checks all possible winning combinations
         if slots[0] == slots[1] == slots[2]:
@@ -97,24 +151,18 @@ class board():
         else:
             return None
     
-
-#Everything below here is just for testing purposes, will be removed in final version
-
-game_board = board()
-game_board.print_board(game_board.slots)
-  
-win = None
-while win == None:
-    while True:
-        user_input = check_input.get_int_range("Select a slot (1-9): ", 1, 9)
-        valid_update = game_board.update_board(game_board.slots, user_input, 'X')
-        if valid_update == True:
-            break
+    '''checks if the game is a draw after every turn'''
+    def check_draw(self, slots):
+        
+        #Increments a counter for every filled slot. If counter reaches 9, all slots are filled and game is a draw
+        count = 0
+        for slot in slots:
+            if slot == 'X' or slot == 'O':
+                count += 1
+        if count == 9:
+            return True
         else:
-            continue
+            return False
     
 
-    game_board.print_board(game_board.slots)
-    win = game_board.check_winner(game_board.slots)
-print("Works")
-
+player_vs_player()
