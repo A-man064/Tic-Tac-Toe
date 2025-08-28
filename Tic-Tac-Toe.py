@@ -27,6 +27,7 @@ def main():
 '''Board class to both display board and keep track of game state'''
 class board():
     def __init__(self):
+        #code for slots is quite repetitive, but I wanted to keep it simple and easy to understand
         self.slot_1 = '1'
         self.slot_2 = '2'
         self.slot_3 = '3'
@@ -47,7 +48,47 @@ class board():
         print("---+---+---")
         print(" " + slots[6] + " | " + slots[7] + " | " + slots[8] + " ")
         print("\n")    
+    
+    '''Updates the board with user or computer input, checks if the slot is already taken'''
+    def update_board(self, slots, input, symbol):
+        #Again, repetitive code but simple to understand
+        if input == 1 and slots[0] != 'X' and slots[0] != 'O':
+            slots[0] = symbol
+        elif input == 2 and slots[1] != 'X' and slots[1] != 'O':
+            slots[1] = symbol
+        elif input == 3 and slots[2] != 'X' and slots[2] != 'O':
+            slots[2] = symbol
+        elif input == 4 and slots[3] != 'X' and slots[3] != 'O':
+            slots[3] = symbol
+        elif input == 5 and slots[4] != 'X' and slots[4] != 'O':
+            slots[4] = symbol
+        elif input == 6 and slots[5] != 'X' and slots[5] != 'O':
+            slots[5] = symbol
+        elif input == 7 and slots[6] != 'X' and slots[6] != 'O':
+            slots[6] = symbol
+        elif input == 8 and slots[7] != 'X' and slots[7] != 'O':
+            slots[7] = symbol
+        elif input == 9 and slots[8] != 'X' and slots[8] != 'O':
+            slots[8] = symbol
+        else:
+            print("Error: Slot already taken")
+            return False
+        return True
+    
+
+#Everything below here is just for testing purposes, will be removed in final version
 
 game_board = board()
 game_board.print_board(game_board.slots)
+
+for i in range(2):    
+    while True:
+        user_input = check_input.get_int_range("Select a slot (1-9): ", 1, 9)
+        valid_update = game_board.update_board(game_board.slots, user_input, 'X')
+        if valid_update == True:
+            break
+        else:
+            continue
+
+    game_board.print_board(game_board.slots)
 
