@@ -44,7 +44,7 @@ def player_vs_player():
         winner = game_board.check_winner(game_board.slots)
         if winner == True:
             print(f"{x_name} wins!")
-            return(x_name)
+            return(x_name, o_name)
         
         #Checks if the game is a draw. Ends the game if so
         draw = game_board.check_draw(game_board.slots)
@@ -68,7 +68,7 @@ def player_vs_player():
         winner = game_board.check_winner(game_board.slots)
         if winner == True:
             print(f"{o_name} wins!")
-            return(o_name)
+            return(o_name, x_name)
         
         #Checks if the game is a draw. Ends the game if so
         draw = game_board.check_draw(game_board.slots)
@@ -164,5 +164,19 @@ class board():
         else:
             return False
     
+'''Main function to run the program'''
+def main():
+    
+    #Keeps the program in a loop to allowed multiple games until user exits
+    while True:
+        menu_choice = menu()
+        
+        #Player vs Player
+        if menu_choice == 1:
+            game_result = player_vs_player()
+            if game_result != None:
+                ()
+
+            
 
 player_vs_player()
