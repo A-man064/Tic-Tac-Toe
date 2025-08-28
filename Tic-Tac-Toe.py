@@ -1,10 +1,11 @@
 import check_input
 import random
 import sys
+import os
 
 '''Displays the main menu for the player to pick a game mode of view scores'''
 def menu():
-    print("TIC-TAC-TOE\n")
+    
     print("1. Player vs Player")
     print("2. Player vs Computer")
     print("3. View Scores")
@@ -77,7 +78,16 @@ def player_vs_player():
             return None
 
 
+'''Views the scores of players from previous games'''
+def view_scores():
+    if os.path.exists("scores.txt"):
+        ()
+    else:
+        print("No scores available")
+        return
     
+    
+
 '''Board class to both display board and keep track of game state'''
 class board():
     def __init__(self):
@@ -166,17 +176,28 @@ class board():
     
 '''Main function to run the program'''
 def main():
-    
+    print("TIC-TAC-TOE")
     #Keeps the program in a loop to allowed multiple games until user exits
     while True:
+        print()
         menu_choice = menu()
+        print()
         
         #Player vs Player
         if menu_choice == 1:
             game_result = player_vs_player()
             if game_result != None:
-                ()
+                winner, Loser = game_result
+        
+        elif menu_choice == 2:
+            ()
+        
+        
+        elif menu_choice == 3:
+            view_scores()
+        
+
 
             
 
-player_vs_player()
+main()
